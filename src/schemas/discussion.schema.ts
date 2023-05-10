@@ -57,3 +57,15 @@ export const ListDiscussionSchema = object({
 
 export type ListDiscussionParams = TypeOf<typeof ListDiscussionSchema>['params'];
 
+export const ListDiscussionMembersSchema = object({
+	params: object({
+		discussionId: string({
+			required_error: 'Discussion ID is required',
+		}).uuid({
+			message: 'An id must be a valid uuid',
+		}),
+	}),
+});
+
+export type ListDiscussionMembersParams = TypeOf<typeof ListDiscussionMembersSchema>['params'];
+

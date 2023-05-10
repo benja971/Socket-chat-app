@@ -125,3 +125,26 @@ export async function listDiscussionHandler(req: Request<ListDiscussionParams>, 
 	});
 }
 
+export async function listDiscussionUsersHandler(req: Request<ListDiscussionMembersParams>, res: Response) {
+	const { discussionId } = req.params;
+
+	// list discussion users
+	try {
+		// select u.id, u.username from users u inner join discussionUsers du on u.id = du.user_id where du.discussion_id = discussionId;
+
+		const discussionUsers = await getDiscussionMembers(discussionId);
+
+		return res.status(200).json({
+			message: 'Discussion users fetched successfully',
+			discussionUsers,
+		});
+	} catch (error: any) {
+		log.error(error);
+
+		return res.status(500).json({
+			message: 'Something went wrong',
+			error: error.message,
+		});
+	}
+}
+

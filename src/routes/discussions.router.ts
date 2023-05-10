@@ -23,6 +23,9 @@ router.post('/:ownerId', validateRequest(CreateDiscussionSchema), createDiscussi
 
 router.get('/:ownerId', validateRequest(ListDiscussionSchema), listDiscussionHandler);
 
+
+router.get('/:discussionId/members', validateRequest(ListDiscussionMembersSchema), listDiscussionUsersHandler);
+
 router.put('/:discussionId/members/:senderId/:userId', validateRequest(AddUserToDiscussionSchema), addUsersToDiscussionHandler);
 
 export default router;
