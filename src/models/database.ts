@@ -69,3 +69,16 @@ models.Discussion.belongsToMany(models.User, {
 	onUpdate: 'CASCADE',
 });
 
+// DiscussionUsers
+models.DiscussionUsers.belongsTo(models.User, {
+	foreignKey: 'userId',
+	onDelete: 'CASCADE',
+	onUpdate: 'CASCADE',
+});
+
+models.DiscussionUsers.belongsTo(models.Discussion, {
+	foreignKey: 'discussionId',
+	onDelete: 'CASCADE',
+	onUpdate: 'CASCADE',
+});
+
