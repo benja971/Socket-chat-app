@@ -19,6 +19,10 @@ export async function createDiscussionHandler(req: Request<CreateDiscussionParam
 	const { ownerId } = req.params;
 	const { title, type } = req.body;
 
+	// make a transaction to create discussion and add user to discussion
+	// if any of the operation fails, rollback the transaction
+	const transaction = await sequelize.transaction();
+
 	try {
 		// create discussion
 		const discussion = await Discussion.create({
@@ -27,11 +31,23 @@ export async function createDiscussionHandler(req: Request<CreateDiscussionParam
 			ownerId,
 		});
 
+		// add user to discussion
+		await DiscussionUsers.create({
+			userId: ownerId,
+			discussionId: discussion.id,
+		});
+
+		// commit the transaction
+		await transaction.commit();
+
 		return res.status(200).json({
 			message: 'Discussion created successfully',
 			discussion,
 		});
 	} catch (error: any) {
+		// rollback the transaction
+		await transaction.rollback();
+
 		if (error.name === 'SequelizeValidationError') {
 			const discussion = await Discussion.findOne({
 				where: {
@@ -39,6 +55,8 @@ export async function createDiscussionHandler(req: Request<CreateDiscussionParam
 					type: 'private',
 				},
 			});
+
+			console.log(discussion);
 
 			return res.status(400).json({
 				message: 'A private discussion with this title already exists',
