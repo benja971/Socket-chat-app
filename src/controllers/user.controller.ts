@@ -8,6 +8,7 @@ import { sendNewUser } from '../socket';
 export async function createUserHandler(req: Request<{}, {}, TCreateUserInput>, res: Response): Promise<void> {
 	const { username, password } = req.body;
 
+	log.debug({ username, password });
 
 	try {
 		const user = await User.create({
@@ -17,11 +18,14 @@ export async function createUserHandler(req: Request<{}, {}, TCreateUserInput>, 
 
 		sendNewUser(user.id!);
 
+		log.debug(`User ${user.username} created successfully`);
+
 		res.json({
 			message: `Welcome ${user.username}! You have successfully signed up`,
 			user,
 		});
 	} catch (error: any) {
+		log.error(error);
 		if (error.name === 'SequelizeUniqueConstraintError') {
 			res.status(409).send({
 				message: `User ${username} already exists`,
@@ -81,6 +85,7 @@ export async function getUsersHandler(req: Request<TGetUsersInput>, res: Respons
 			users,
 		});
 	} catch (error: any) {
+		log.error(error);
 		res.status(500).send({
 			message: 'Something went wrong',
 		});
@@ -103,10 +108,12 @@ export async function findUserByIdHandler(req: Request<TFindUserByIdInput>, res:
 				message: `User ${userId} not found`,
 			});
 
+		log.debug(`User ${user.username} found successfully`);
 		res.json({
 			user,
 		});
 	} catch (error: any) {
+		log.error(error);
 		res.status(500).send({
 			message: 'Something went wrong',
 		});
