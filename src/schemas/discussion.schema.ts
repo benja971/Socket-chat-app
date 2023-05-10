@@ -47,3 +47,13 @@ export const AddUserToDiscussionSchema = object({
 
 export type AddUserToDiscussionParams = TypeOf<typeof AddUserToDiscussionSchema>['params'];
 
+export const ListDiscussionSchema = object({
+	params: object({
+		ownerId: string({
+			required_error: 'Owner ID is required',
+		}).uuid({ message: 'An id must be a valid uuid' }),
+	}),
+});
+
+export type ListDiscussionParams = TypeOf<typeof ListDiscussionSchema>['params'];
+

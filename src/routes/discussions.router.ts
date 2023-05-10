@@ -21,6 +21,7 @@ const router = Router();
 
 router.post('/:ownerId', validateRequest(CreateDiscussionSchema), createDiscussionHandler);
 
+router.get('/:ownerId', validateRequest(ListDiscussionSchema), listDiscussionHandler);
 
 router.put('/:discussionId/members/:senderId/:userId', validateRequest(AddUserToDiscussionSchema), addUsersToDiscussionHandler);
 

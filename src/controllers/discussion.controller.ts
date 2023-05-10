@@ -101,3 +101,27 @@ export async function addUsersToDiscussionHandler(req: Request<AddUserToDiscussi
 		});
 	}
 }
+
+export async function listDiscussionHandler(req: Request<ListDiscussionParams>, res: Response) {
+	const { ownerId } = req.params;
+
+	// list discussions
+	let discussions;
+	try {
+		discussions = await listDiscussions(ownerId);
+		log.debug(discussions);
+	} catch (error: any) {
+		log.error(error);
+
+		return res.status(500).json({
+			message: 'Something went wrong',
+			error: error.message,
+		});
+	}
+
+	return res.status(200).json({
+		message: 'Discussions fetched successfully',
+		discussions,
+	});
+}
+
