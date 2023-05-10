@@ -28,6 +28,36 @@ export default function socketHandler(io: Server) {
 			log.debug(`Socket map size: ${socketMap.size}`);
 		});
 
+		socket.on('message', async (data: TMessageFromClient) => {
+			const { senderId, discussionId, content, senderUsername } = data;
+			log.debug(`Received ${content} from ${senderId} in discussion ${discussionId}`);
+
+			try {
+				const message = await saveMessage(senderId, discussionId, content);
+				const messageWithSenderUsername: Message = {
+					...message.dataValues,
+					senderUsername,
+				};
+				const discussionUsers = await getDiscussionMembers(discussionId);
+
+				const others = discussionUsers.filter(user => {
+					log.debug(`username ${user.username}: id ${user.id}`);
+					return user.id !== senderId;
+				});
+				log.debug(`Sending message to ${others.length} users`);
+
+				others.forEach(user => {
+					const socket = socketMap.get(user.id!);
+
+					if (socket) {
+						log.debug(`Sending message to ${user.id}`);
+						socket.emit('message', messageWithSenderUsername);
+					}
+				});
+			} catch (error) {
+				log.error(error);
+			}
+		});
 	});
 }
 
