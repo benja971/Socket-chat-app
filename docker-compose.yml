@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+    mysql:
+        container_name: pji_mysql
+        image: mysql
+        restart: unless-stopped
+
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_ROOT_PASSWORD: ${DB_PASS}
+
+        ports:
+            - '${DB_PORT}:${DB_PORT}'
+        volumes:
+            - P2P-discussion-app:/var/lib/mysql
+
+    api:
+        container_name: pji_app
+        depends_on:
+            - mysql
+
+        build:
+            dockerfile: Dockerfile
+            context: .
+
+        volumes:
+            - .:/app
+        ports:
+            - '${PORT}:${PORT}'
+
+volumes:
+    P2P-discussion-app:
