@@ -51,3 +51,13 @@ export async function listDiscussions(ownerId: string) {
 	return discussions;
 }
 
+export async function findDiscussionByTitle(title: string, type: string = 'private') {
+	const discussion = await Discussion.findOne({
+		where: {
+			title,
+			type,
+		},
+	});
+
+	return discussion;
+}

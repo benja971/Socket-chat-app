@@ -148,3 +148,63 @@ export async function listDiscussionUsersHandler(req: Request<ListDiscussionMemb
 	}
 }
 
+export async function findDiscussionByIdHandler(req: Request<FindDiscussionParams>, res: Response) {
+	const { ownerId, discussionId } = req.params;
+
+	// list discussions
+	try {
+		const discussion = await Discussion.findOne({
+			where: {
+				id: discussionId,
+				ownerId,
+			},
+		});
+
+		if (!discussion) throw new Error('Discussion not found');
+
+		return res.status(200).json({
+			message: 'Discussion fetched successfully',
+			discussion,
+		});
+	} catch (error: any) {
+		if (error.message === 'Discussion not found') {
+			return res.status(404).json({
+				message: 'Discussion not found',
+			});
+		}
+
+		log.error(error);
+		return res.status(500).json({
+			message: 'Something went wrong',
+			error: error.message,
+		});
+	}
+}
+
+export async function findDiscussionByTitleHandler(req: Request<FindDiscussionByTitleParams>, res: Response) {
+	const { title, type } = req.params;
+
+	let discussion;
+	try {
+		discussion = await findDiscussionByTitle(title, type);
+
+		if (!discussion) throw new Error('Discussion not found');
+
+		return res.status(200).json({
+			message: 'Discussion fetched successfully',
+			discussion,
+		});
+	} catch (error: any) {
+		if (error.message === 'Discussion not found') {
+			return res.status(404).json({
+				message: 'Discussion not found',
+			});
+		}
+
+		log.error(error);
+		return res.status(500).json({
+			message: 'Something went wrong',
+			error: error.message,
+		});
+	}
+}

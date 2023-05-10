@@ -23,8 +23,11 @@ router.post('/:ownerId', validateRequest(CreateDiscussionSchema), createDiscussi
 
 router.get('/:ownerId', validateRequest(ListDiscussionSchema), listDiscussionHandler);
 
+router.get('/find-by-id/:ownerId/:discussionId', validateRequest(FindDiscussionSchema), findDiscussionByIdHandler);
 
 router.get('/:discussionId/members', validateRequest(ListDiscussionMembersSchema), listDiscussionUsersHandler);
+
+router.get('/find-by-title/:type/:title', validateRequest(FindDiscussionByTitleSchema), findDiscussionByTitleHandler);
 
 router.put('/:discussionId/members/:senderId/:userId', validateRequest(AddUserToDiscussionSchema), addUsersToDiscussionHandler);
 
