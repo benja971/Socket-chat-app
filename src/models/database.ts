@@ -40,3 +40,18 @@ modelFiles.forEach(file => {
 	log.debug(`Initializing ${model.name}...`);
 	models[model.name].initModel(sequelize);
 });
+
+// User
+models.User.hasMany(models.Discussion, {
+	foreignKey: 'ownerId',
+	onDelete: 'CASCADE',
+	onUpdate: 'CASCADE',
+});
+
+// Discussion
+models.Discussion.belongsTo(models.User, {
+	foreignKey: 'ownerId',
+	onDelete: 'CASCADE',
+	onUpdate: 'CASCADE',
+});
+
