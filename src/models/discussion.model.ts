@@ -48,6 +48,25 @@ class Discussion extends Model {
 			{
 				sequelize,
 				modelName: 'discussions',
+				validate: {
+					validateUniquePrivateDiscussion: async function (this: Discussion) {
+						// can't have two private discussions with the same title
+						if (!this.type || this.type !== 'private') return;
+
+						const discussion = await Discussion.findOne({
+							where: {
+								title: this.title,
+								type: 'private',
+							},
+						});
+
+						if (!discussion) return;
+
+						if (discussion.id !== this.id) {
+							throw new Error('A private discussion with this title already exists');
+						}
+					},
+				},
 			},
 		);
 	}
