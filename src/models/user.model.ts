@@ -56,6 +56,28 @@ class User extends Model {
 			{
 				sequelize,
 				modelName: 'users',
+				hasTrigger: true,
+				hooks: {
+					// Triggered before creating and updating a user to hash the password
+					beforeCreate: async (user: User) => {
+						log.debug('beforeCreate hook');
+						try {
+							user.password = await hash(user.password);
+						} catch (err) {
+							throw new Error('Error hashing password');
+						}
+					},
+					beforeUpdate: async (user: User) => {
+						if (user.changed('password')) {
+							log.debug('beforeUpdate hook');
+							try {
+								user.password = await hash(user.password);
+							} catch (err) {
+								throw new Error('Error hashing password');
+							}
+						}
+					},
+				},
 			},
 		);
 	}
