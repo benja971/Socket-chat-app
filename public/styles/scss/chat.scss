@@ -1,0 +1,128 @@
+@import 'colors';
+
+main {
+	aside {
+		flex: 1;
+		background-color: $color-light;
+
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+
+		.user {
+			background-color: $color-primary;
+			text-align: center;
+			cursor: pointer;
+		}
+		.discussion {
+			text-align: center;
+			cursor: pointer;
+			background-color: $color-secondary;
+		}
+	}
+
+	section {
+		flex: 3;
+		background-color: $color-dark;
+		display: flex;
+		flex-direction: column;
+
+		#messages-container {
+			background-color: $color-info;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			overflow-y: auto;
+			font-size: 0.8em;
+
+			app-message {
+				.message {
+					display: flex;
+					flex-direction: column;
+					background-color: $color-secondary;
+					padding: 0.5rem;
+					border-radius: 0.5rem;
+					margin: 0.5rem;
+					max-width: 40%;
+					margin-left: 55%;
+					min-width: 10%;
+
+					.content {
+						font-size: 0.8em;
+					}
+
+					&.me {
+						background-color: $color-primary;
+						margin-left: 5%;
+					}
+				}
+			}
+		}
+
+		#input-box {
+			background-color: $color-info;
+			display: flex;
+			justify-content: center;
+			padding-bottom: 1rem;
+
+			input {
+				flex: 1;
+				padding: 0.5rem;
+				border: none;
+				border-radius: 0.5rem 0 0 0.5rem;
+				background-color: $color-light;
+				color: $color-dark;
+				width: 40ch;
+			}
+
+			button {
+				padding: 0.5rem;
+				border: none;
+				border-radius: 0 0.5rem 0.5rem 0;
+				background-color: $color-light;
+				color: $color-dark;
+				cursor: pointer;
+
+				&:hover {
+					background-color: $color-dark;
+					color: $color-light;
+				}
+
+				&:active {
+					background-color: $color-dark;
+					color: $color-light;
+				}
+
+				&:focus {
+					outline: none;
+				}
+
+				&:disabled {
+					background-color: $color-secondary;
+					color: $color-dark;
+					cursor: not-allowed;
+				}
+
+				&:disabled:hover {
+					background-color: $color-secondary;
+					color: $color-dark;
+				}
+
+				&:disabled:active {
+					background-color: $color-secondary;
+					color: $color-dark;
+				}
+
+				&:disabled:focus {
+					outline: none;
+				}
+
+				&:not(:disabled):hover {
+					background-color: $color-dark;
+					color: $color-light;
+				}
+			}
+		}
+	}
+}
