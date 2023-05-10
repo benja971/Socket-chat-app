@@ -5,7 +5,7 @@
 	"main": "./dist/src/test-ci.js",
 	"scripts": {
 		"dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-		"build": "tsc ./src/",
+		"build": "tsc",
 		"watch": "tsc -w",
 		"sass": "sass --watch public/styles/scss:public/styles/css --no-source-map",
 		"start": "node ./dist/src/test-ci.js",
