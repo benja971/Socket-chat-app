@@ -61,7 +61,14 @@ export default function socketHandler(io: Server) {
 	});
 }
 
-	});
+export function addToContacts(emitterId: string, receiverId: string) {
+	const socket = socketMap.get(emitterId);
+
+	if (socket) {
+		socket.emit('contactRequest', {
+			contactId: receiverId,
+		});
+	}
 }
 
 	});
