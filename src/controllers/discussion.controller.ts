@@ -82,6 +82,7 @@ export async function addUsersToDiscussionHandler(req: Request<AddUserToDiscussi
 			discussionId,
 		});
 
+		addToContacts(userId, senderId);
 
 		return res.status(200).json({
 			message: 'User added to discussion successfully',
