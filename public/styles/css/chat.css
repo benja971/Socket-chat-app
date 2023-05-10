@@ -1,0 +1,104 @@
+main aside {
+  flex: 1;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+main aside .user {
+  background-color: #007bff;
+  text-align: center;
+  cursor: pointer;
+}
+main aside .discussion {
+  text-align: center;
+  cursor: pointer;
+  background-color: #6c757d;
+}
+main section {
+  flex: 3;
+  background-color: #343a40;
+  display: flex;
+  flex-direction: column;
+}
+main section #messages-container {
+  background-color: #17a2b8;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  font-size: 0.8em;
+}
+main section #messages-container app-message .message {
+  display: flex;
+  flex-direction: column;
+  background-color: #6c757d;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  max-width: 40%;
+  margin-left: 55%;
+  min-width: 10%;
+}
+main section #messages-container app-message .message .content {
+  font-size: 0.8em;
+}
+main section #messages-container app-message .message.me {
+  background-color: #007bff;
+  margin-left: 5%;
+}
+main section #input-box {
+  background-color: #17a2b8;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+main section #input-box input {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem 0 0 0.5rem;
+  background-color: #f8f9fa;
+  color: #343a40;
+  width: 40ch;
+}
+main section #input-box button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background-color: #f8f9fa;
+  color: #343a40;
+  cursor: pointer;
+}
+main section #input-box button:hover {
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+main section #input-box button:active {
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+main section #input-box button:focus {
+  outline: none;
+}
+main section #input-box button:disabled {
+  background-color: #6c757d;
+  color: #343a40;
+  cursor: not-allowed;
+}
+main section #input-box button:disabled:hover {
+  background-color: #6c757d;
+  color: #343a40;
+}
+main section #input-box button:disabled:active {
+  background-color: #6c757d;
+  color: #343a40;
+}
+main section #input-box button:disabled:focus {
+  outline: none;
+}
+main section #input-box button:not(:disabled):hover {
+  background-color: #343a40;
+  color: #f8f9fa;
+}

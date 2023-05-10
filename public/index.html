@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- styles -->
+		<link rel="stylesheet" href="/main.css" />
+		<link rel="stylesheet" href="/access.css" />
+		<link rel="stylesheet" href="/chat.css" />
+
+		<!-- scripts -->
+		<script src="socket.io.js"></script>
+
+		<!-- Components -->
+		<script src="/components/Discussion.js" defer></script>
+		<script src="/components/Message.js" defer></script>
+
+		<script src="index.js" defer></script>
+		<script src="API.js" defer></script>
+		<script src="utils.js" defer></script>
+		<script src="access.js" defer></script>
+		<script src="users.js" defer></script>
+		<script src="discussions.js" defer></script>
+		<script src="messages.js" defer></script>
+
+		<title>PJI</title>
+	</head>
+	<body>
+		<section id="access" class="page" active>
+			<form id="access-form">
+				<!-- username + password  -->
+
+				<div class="input-group">
+					<label for="username">Username</label>
+					<input type="text" name="username" id="username" autocomplete="username" minlength="3" maxlength="20" placeholder="Bobby" />
+				</div>
+
+				<div class="input-group">
+					<label for="password">Password</label>
+					<input
+						type="password"
+						name="password"
+						id="password"
+						autocomplete="current-password"
+						minlength="6"
+						maxlength="20"
+						placeholder="********"
+					/>
+				</div>
+
+				<div class="input-group">
+					<button id="login-button" type="login">Login</button>
+					<button id="register-button" type="submit">Register</button>
+				</div>
+			</form>
+		</section>
+
+		<main class="page">
+			<h2 id="username"></h2>
+			<!-- 
+					this is the main page of a chat app
+					there is at the left a panel with all the users
+				 -->
+
+			<aside id="users">
+				<template id="user-template">
+					<div class="user" data-id="">
+						<p id="user-id" hidden></p>
+						<p class="username"></p>
+					</div>
+				</template>
+			</aside>
+
+			<section id="messages-container-container" class="page">
+				<div class="page" id="messages-container">
+					<template id="message-template">
+						<div class="message">
+							<p class="username"></p>
+							<p class="content"></p>
+						</div>
+					</template>
+				</div>
+				<div class="page" id="input-box">
+					<form class="page" id="input-form">
+						<input type="text" name="message" id="message-input" autocomplete="off" placeholder="Type your message here" />
+						<button type="submit" id="send-button">Send</button>
+					</form>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>
