@@ -82,3 +82,19 @@ models.DiscussionUsers.belongsTo(models.Discussion, {
 	onUpdate: 'CASCADE',
 });
 
+// Message
+models.Message.belongsTo(models.User, {
+	foreignKey: 'senderId',
+	onDelete: 'CASCADE',
+	onUpdate: 'CASCADE',
+});
+
+models.Message.belongsTo(models.Discussion, {
+	foreignKey: 'discussionId',
+	onDelete: 'CASCADE',
+	onUpdate: 'CASCADE',
+});
+
+log.debug('Synchronizing database...');
+
+export { sequelize, models };
