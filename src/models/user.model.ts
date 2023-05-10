@@ -29,6 +29,24 @@ class User extends Model {
 					type: DataTypes.STRING(128),
 					allowNull: false,
 					unique: true,
+					set(value: string) {
+						// set to lowercase
+						const lwc = value.toLowerCase();
+
+						// split into array (separator can be all non-word characters and underscore)
+						const arr = lwc.split(/[\W_]+/);
+
+						// capitalize first letter of each word
+						const cap = arr.map(word => {
+							return word.charAt(0).toUpperCase() + word.slice(1);
+						});
+
+						// join array into string
+						const str = cap.join('-');
+
+						// set value
+						this.setDataValue('username', str);
+					},
 				},
 				password: {
 					type: DataTypes.STRING(128),
