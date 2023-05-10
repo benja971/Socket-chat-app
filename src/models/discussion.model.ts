@@ -48,6 +48,7 @@ class Discussion extends Model {
 			{
 				sequelize,
 				modelName: 'discussions',
+				// TODO: Use Discussion.findOrCreate instead of this
 				validate: {
 					validateUniquePrivateDiscussion: async function (this: Discussion) {
 						// can't have two private discussions with the same title
