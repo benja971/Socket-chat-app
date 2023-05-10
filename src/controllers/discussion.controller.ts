@@ -71,3 +71,33 @@ export async function createDiscussionHandler(req: Request<CreateDiscussionParam
 	}
 }
 
+// TODO: must be set as a service
+export async function addUsersToDiscussionHandler(req: Request<AddUserToDiscussionParams>, res: Response) {
+	const { discussionId, userId, senderId } = req.params;
+
+	// add user to discussion
+	try {
+		const userDiscussion = await DiscussionUsers.create({
+			userId,
+			discussionId,
+		});
+
+
+		return res.status(200).json({
+			message: 'User added to discussion successfully',
+			userDiscussion,
+		});
+	} catch (error: any) {
+		if (error.name === 'SequelizeUniqueConstraintError') {
+			return res.status(400).json({
+				message: 'User already added to discussion',
+				error: error.message,
+			});
+		}
+
+		return res.status(500).json({
+			message: 'Something went wrong',
+			error: error.message,
+		});
+	}
+}

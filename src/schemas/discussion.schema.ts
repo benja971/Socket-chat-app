@@ -25,3 +25,25 @@ export const CreateDiscussionSchema = object({
 export type CreateDiscussionInput = TypeOf<typeof CreateDiscussionSchema>['body'];
 export type CreateDiscussionParams = TypeOf<typeof CreateDiscussionSchema>['params'];
 
+export const AddUserToDiscussionSchema = object({
+	params: object({
+		discussionId: string({
+			required_error: 'Discussion ID is required',
+		}).uuid({
+			message: 'An id must be a valid uuid',
+		}),
+		senderId: string({
+			required_error: 'User ID is required',
+		}).uuid({
+			message: 'An id must be a valid uuid',
+		}),
+		userId: string({
+			required_error: 'User ID is required',
+		}).uuid({
+			message: 'An id must be a valid uuid',
+		}),
+	}),
+});
+
+export type AddUserToDiscussionParams = TypeOf<typeof AddUserToDiscussionSchema>['params'];
+

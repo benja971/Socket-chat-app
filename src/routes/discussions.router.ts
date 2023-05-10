@@ -20,3 +20,8 @@ import {
 const router = Router();
 
 router.post('/:ownerId', validateRequest(CreateDiscussionSchema), createDiscussionHandler);
+
+
+router.put('/:discussionId/members/:senderId/:userId', validateRequest(AddUserToDiscussionSchema), addUsersToDiscussionHandler);
+
+export default router;
