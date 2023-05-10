@@ -15,3 +15,13 @@ export const createUserSchema = object({
 	}),
 });
 
+export const getUsersSchema = object({
+	params: object({
+		userId: string({
+			required_error: 'userId is required',
+		}).uuid({ message: 'An id must be a valid uuid' }),
+	}),
+});
+
+export type TGetUsersInput = TypeOf<typeof getUsersSchema>['params'];
+

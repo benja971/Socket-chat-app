@@ -5,4 +5,7 @@ import { FindUserByIdSchema, createUserSchema, getUserSchema, getUsersSchema } f
 const router = Router();
 
 router.post('/', validateResource(createUserSchema), createUserHandler);
+
+router.get('/:userId', validateResource(getUsersSchema), getUsersHandler);
+
 export default router;
