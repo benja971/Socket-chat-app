@@ -71,5 +71,15 @@ export function addToContacts(emitterId: string, receiverId: string) {
 	}
 }
 
+export function sendNewUser(newId: string) {
+	log.debug(`Sending new user ${newId} users`);
+	socketMap.forEach((socket, userId) => {
+		if (userId === newId) return;
+
+		log.debug(`Sending new user ${newId} to ${userId}`);
+
+		socket.emit('new-user', {
+			userId: newId,
+		});
 	});
 }
