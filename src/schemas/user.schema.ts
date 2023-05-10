@@ -15,6 +15,12 @@ export const createUserSchema = object({
 	}),
 });
 
+export type TCreateUserInput = TypeOf<typeof createUserSchema>['body'];
+
+export const getUserSchema = createUserSchema;
+
+export type TGetUserInput = TypeOf<typeof getUserSchema>['body'];
+
 export const getUsersSchema = object({
 	params: object({
 		userId: string({
