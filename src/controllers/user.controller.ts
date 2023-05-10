@@ -54,3 +54,28 @@ export async function getUsersHandler(req: Request<TGetUsersInput>, res: Respons
 	}
 }
 
+export async function findUserByIdHandler(req: Request<TFindUserByIdInput>, res: Response) {
+	const { userId } = req.params;
+
+	try {
+		const user = await User.findOne({
+			where: {
+				id: userId,
+			},
+			attributes: ['id', 'username'],
+		});
+
+		if (!user)
+			return res.status(404).send({
+				message: `User ${userId} not found`,
+			});
+
+		res.json({
+			user,
+		});
+	} catch (error: any) {
+		res.status(500).send({
+			message: 'Something went wrong',
+		});
+	}
+}

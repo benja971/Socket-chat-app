@@ -25,3 +25,12 @@ export const getUsersSchema = object({
 
 export type TGetUsersInput = TypeOf<typeof getUsersSchema>['params'];
 
+export const FindUserByIdSchema = object({
+	params: object({
+		userId: string({
+			required_error: 'userId is required',
+		}).uuid({ message: 'An id must be a valid uuid' }),
+	}),
+});
+
+export type TFindUserByIdInput = TypeOf<typeof FindUserByIdSchema>['params'];
