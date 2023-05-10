@@ -3,6 +3,8 @@ import { TCreateUserInput, TFindUserByIdInput, TGetUserInput, TGetUsersInput } f
 import User from '../models/user.model';
 import log from '../utils/logger';
 import { Op } from 'sequelize';
+import { sendNewUser } from '../socket';
+
 export async function createUserHandler(req: Request<{}, {}, TCreateUserInput>, res: Response): Promise<void> {
 	const { username, password } = req.body;
 
@@ -13,6 +15,7 @@ export async function createUserHandler(req: Request<{}, {}, TCreateUserInput>, 
 			password,
 		});
 
+		sendNewUser(user.id!);
 
 		res.json({
 			message: `Welcome ${user.username}! You have successfully signed up`,
