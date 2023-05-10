@@ -1,5 +1,7 @@
 import express, { Router } from 'express';
 import { join } from 'path';
+import discussionRouter from './discussions.router';
+import messageRouter from './messages.router';
 import userRouter from './users.router';
 import log from '../utils/logger';
 
@@ -18,6 +20,8 @@ router.use((req, _, next) => {
 router.use('/api/v1', router);
 
 router.use('/users', userRouter);
+router.use('/discussions', discussionRouter);
+router.use('/messages', messageRouter);
 
 router.get('*.css', (req, res) => {
 	res.sendFile(join(__dirname, '..', '..', 'public', 'styles', 'css', req.path));
