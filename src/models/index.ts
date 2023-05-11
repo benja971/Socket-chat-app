@@ -13,7 +13,7 @@ function initDb() {
 		});
 
 	sequelize
-		.sync({ force: true, alter: true })
+		.sync({ force: false, alter: false })
 		.then(() => {
 			Object.keys(models).forEach(modelName => {
 				log.debug(`Initializing scopes for ${modelName}...`);
