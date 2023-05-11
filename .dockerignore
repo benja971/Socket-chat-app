@@ -14,5 +14,4 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
-**.js
 README.md

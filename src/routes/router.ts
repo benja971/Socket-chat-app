@@ -4,13 +4,14 @@ import discussionRouter from './discussions.router';
 import messageRouter from './messages.router';
 import userRouter from './users.router';
 import log from '../utils/logger';
+import { existsSync } from 'fs';
 
 const router = Router();
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.use('/', express.static(join(__dirname, '..', '..', 'public')));
+router.use('/', express.static(join(__dirname, '../../../public')));
 
 router.use((req, _, next) => {
 	log.debug(`${req.method} ${req.path}`);
@@ -24,16 +25,36 @@ router.use('/discussions', discussionRouter);
 router.use('/messages', messageRouter);
 
 router.get('*.css', (req, res) => {
-	res.sendFile(join(__dirname, '..', '..', 'public', 'styles', 'css', req.path));
+	for (const pre of ['', '..', '../..', '../../..']) {
+		const path = join(__dirname, `${pre}/public/styles/css${req.path}`);
+		if (existsSync(path)) {
+			res.sendFile(path);
+			return;
+		}
+	}
+
+	res.status(404).send('Not found');
 });
 
 router.get('*.js', (req, res) => {
 	if (req.path === '/socket.io.js') {
-		const path = join(__dirname, '..', '..', 'node_modules', 'socket.io', 'client-dist', 'socket.io.js');
+		const path = join(__dirname, '../../../node_modules/socket.io/client-dist/socket.io.js');
 		res.sendFile(path);
 		return;
 	}
-	res.sendFile(join(__dirname, '..', '..', 'public', 'scripts', req.path));
+
+	for (const pre of ['', '..', '../..', '../../..']) {
+		const path = join(__dirname, `${pre}/public/scripts${req.path}`);
+
+		if (existsSync(path)) {
+			console.log(path);
+			res.sendFile(path);
+			return;
+		}
+	}
+
+	console.log(req.path);
+	res.status(404).send('Not found');
 });
 
 export default router;

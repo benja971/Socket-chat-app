@@ -1,6 +1,6 @@
 class API {
-	static PORT = 8080;
-	static BASE_URL = `http://192.168.1.21:${API.PORT}/api/v1`;
+	static PORT = 8001;
+	static BASE_URL = `https://benjamin-niddam.dev:${API.PORT}/api/v1`;
 
 	static #safeFetch = async (url, payload) => {
 		const response = await fetch(url, payload);

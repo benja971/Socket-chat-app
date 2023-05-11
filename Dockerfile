@@ -6,9 +6,12 @@ WORKDIR /code
 COPY package.json ./
 
 # Install dependencies
-RUN npm install 
+RUN npm install
 
 COPY . .
+
+# Build the application
+RUN npm run build
 
 # Expose the necessary port(s)
 EXPOSE 8001
@@ -32,6 +35,7 @@ RUN npm install -g pm2
 
 # Set the entry point to run the app with PM2
 CMD ["pm2-runtime", "start", "npm", "--", "start"]
+
 
 
 # To build the Docker image for development, you can use the following command:
